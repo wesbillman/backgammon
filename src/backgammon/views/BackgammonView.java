@@ -14,9 +14,36 @@ public class BackgammonView {
         System.out.println("*********************************************");
         System.out.println(" Welcome to Backgammon (console) version 1.2 ");
         System.out.println("*********************************************");
-        System.out.println();
     }
-    
+
+    public void displayGoodbye() {
+        System.out.println();
+        System.out.println("*********************************************");
+        System.out.println("       Thanks for playing Backgammon         ");
+        System.out.println("*********************************************");
+    }
+
+    public void displayInvalidOption(String option) {
+        System.out.println();
+        System.out.println("'" + option + "' is not a valid option");
+    }
+
+    public void displayMessage(String message) {
+        System.out.print(message);
+    }
+
+    public void displayGameStart(Dice dice, int firstPlayer) {
+        System.out.println("Starting Roll...");
+        System.out.println("  Black: " + dice.getRoll()[0]);
+        System.out.println("  White: " + dice.getRoll()[1]);
+
+        if(firstPlayer == Player.PLAYER_0) {
+            System.out.println("Black goes first.");
+        } else {
+            System.out.println("White goes first.");
+        }
+    }
+
     public void displayBoard(Board board, int currentPlayer) {
         String s = "";
         if (currentPlayer == Player.PLAYER_0) {
@@ -50,14 +77,17 @@ public class BackgammonView {
         System.out.print(s);
     }
 
-    public void displayStatus(int player0score, int player1score) {
+    public void displayStatus(int player0score, int player1score, Dice dice) {
         System.out.print("Black: " + player0score);
         System.out.print("      White: " + player1score);
         System.out.print("     Dice: ");
-//        aiDice = backgammon.getRoll();
-//        for (i = 0; i < aiDice.length; i++) {
-//            System.out.print(" " + aiDice[i]);
-//        }
+
+        int[] aiDice = dice.getRoll();
+        for (int i = 0; i < aiDice.length; i++) {
+            System.out.print(" " + aiDice[i]);
+        }
+
+        System.out.println();
     }
     private String displayLine(Board b, int iLevel, boolean isBlackSide) {
         int i;                          // loop counter
@@ -119,10 +149,12 @@ public class BackgammonView {
     }
 
     public String getGameType() {
+        System.out.println();
         System.out.println("Select Game Type:");
         System.out.println("  0 - Computer vs. Computer");
         System.out.println("  1 - Player vs. Computer");
         System.out.println("  2 - Player vs. Player");
+        System.out.println("  E - Exit the application");
         System.out.print("Game Type: ");
 
         return InputController.readString();

@@ -51,12 +51,8 @@ public class DiceTest {
     public void testRemoveDie() {
         Dice instance = new Dice();
         int[] dice = instance.roll();
-        System.out.println(instance.toString());
         int expResult = dice.length - 1;
-        System.out.println(dice[0]);
         int[] result = instance.removeDie(dice[0]);
-
-        System.out.println(instance.toString());
         assertEquals(expResult, result.length);
     }
 

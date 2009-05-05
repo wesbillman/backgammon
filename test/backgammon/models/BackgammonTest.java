@@ -42,7 +42,8 @@ public class BackgammonTest {
      */
     @Test
     public void testGetScore() {       
-        Backgammon instance = new Backgammon();        
+        Backgammon instance = new Backgammon();
+        instance.init();
         int result = instance.getScore(Player.PLAYER_0);
         assertEquals(15, result);
 
