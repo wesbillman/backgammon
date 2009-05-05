@@ -1,9 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package backgammon.views;
 
+import backgammon.controllers.InputController;
 import backgammon.models.*;
 
 /**
@@ -12,6 +9,14 @@ import backgammon.models.*;
  */
 public class BackgammonView {
 
+    public void displayBanner() {
+        System.out.println();
+        System.out.println("*********************************************");
+        System.out.println(" Welcome to Backgammon (console) version 1.2 ");
+        System.out.println("*********************************************");
+        System.out.println();
+    }
+    
     public void displayBoard(Board board, int currentPlayer) {
         String s = "";
         if (currentPlayer == Player.PLAYER_0) {
@@ -19,7 +24,7 @@ public class BackgammonView {
             s += "| 13 14 15 16 17 18 (0)  19 20 21 22 23 24  |\n";
             s += "|-------------------------------------------|\n";
         } else {
-            s += "|-------------------------------------------w\n";
+            s += "+-------------------------------------------w\n";
             s += "| 12 11 10  9  8  7 (25)  6  5  4  3  2  1  |\n";
             s += "---------------------------------------------\n";
         }
@@ -45,6 +50,15 @@ public class BackgammonView {
         System.out.print(s);
     }
 
+    public void displayStatus(int player0score, int player1score) {
+        System.out.print("Black: " + player0score);
+        System.out.print("      White: " + player1score);
+        System.out.print("     Dice: ");
+//        aiDice = backgammon.getRoll();
+//        for (i = 0; i < aiDice.length; i++) {
+//            System.out.print(" " + aiDice[i]);
+//        }
+    }
     private String displayLine(Board b, int iLevel, boolean isBlackSide) {
         int i;                          // loop counter
         boolean bDisplayDot = false;    // display dots on the line
@@ -102,5 +116,15 @@ public class BackgammonView {
         }
 
         return s;
+    }
+
+    public String getGameType() {
+        System.out.println("Select Game Type:");
+        System.out.println("  0 - Computer vs. Computer");
+        System.out.println("  1 - Player vs. Computer");
+        System.out.println("  2 - Player vs. Player");
+        System.out.print("Game Type: ");
+
+        return InputController.readString();
     }
 }

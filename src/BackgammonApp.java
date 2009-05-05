@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+import backgammon.controllers.*;
 
 /**
  *
@@ -9,4 +6,11 @@
  */
 public class BackgammonApp {
 
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        BackgammonController controller = new BackgammonController();
+        controller.init();
+    }
 }
