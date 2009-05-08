@@ -159,4 +159,17 @@ public class BackgammonView {
 
         return InputController.readString();
     }
+
+    public String[] getMove(int player) {
+        String[] moves = new String[2];
+        String playerName = (player == Player.PLAYER_0) ? "Black" : "White";
+
+        System.out.print(playerName + " move from: ");
+        moves[0] = InputController.readString();        
+
+        System.out.print(playerName + " move to: ");
+        moves[1] = InputController.readString();        
+
+        return moves;
+    }
 }

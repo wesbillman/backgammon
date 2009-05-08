@@ -41,10 +41,25 @@ public class BackgammonController {
     }
 
     private void play() {
-        view.displayBoard(model.getBoard(), Player.PLAYER_0);
-        view.displayStatus(model.getScore(Player.PLAYER_0),
-                model.getScore(Player.PLAYER_1),
-                model.getDice());
+
+        while(!model.isGameComplete()) {
+            view.displayBoard(model.getBoard(), Player.PLAYER_0);
+            view.displayStatus(model.getScore(Player.PLAYER_0),
+                    model.getScore(Player.PLAYER_1),
+                    model.getDice());
+            String[] move = view.getMove(model.getCurrentPlayer().getId());
+            int iStart, iDest;
+            try{
+                iStart = Integer.parseInt(move[0]);
+                iDest = Integer.parseInt(move[1]);
+            } catch( NumberFormatException ex) {
+                view.displayInvalidOption(move[0] + " or " + move[1]);
+                continue;
+            }
+
+            String moveResult = model.moveChecker(iStart, iDest);
+            if(moveResult != null) view.displayMessage(moveResult + "\n");
+        }
     }
 
     private void exit() {

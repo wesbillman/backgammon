@@ -71,4 +71,51 @@ public class Backgammon {
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
+
+    /**
+     * Returns true if the game is over...
+     * @return is game complete
+     */
+    public boolean isGameComplete() {
+        if(getScore(player0.getId()) == 0) return true;
+        if(getScore(player1.getId()) == 0) return true;
+
+        return false;
+    }
+
+    public String moveChecker(int iStart, int iDest) {
+        String result = null;
+
+        if(iStart == iDest) return "Cannot move to same position";
+        
+        result = haveCorrectDice(Math.abs(iDest - iStart));
+        if (result != null) return result;
+
+        result = isCorrectDirection(iStart, iDest);
+        if (result != null) return result;
+
+        return null;
+    }
+
+    private String haveCorrectDice(int moveDistance) {
+        int diceTotal = 0;
+        for(int i = 0; i < dice.getRoll().length; i++) {
+            int die = dice.getRoll()[i];
+            diceTotal += die;
+            if(moveDistance == die) return null;
+            if(moveDistance == diceTotal) return null;
+        }
+        
+        return "You do not have the correct dice for this move";
+    }
+
+    private String isCorrectDirection(int iStart, int iDest) {
+        if(currentPlayer.equals(player0) && iStart > iDest)
+            return null;
+        if(currentPlayer.equals(player1) && iDest > iStart) {
+            return null;
+        }
+
+        return "You cannot move backwards.";
+    }
 }
