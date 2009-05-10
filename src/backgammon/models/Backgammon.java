@@ -85,37 +85,67 @@ public class Backgammon {
 
     public String moveChecker(int iStart, int iDest) {
         String result = null;
+        int moveDistance = Math.abs(iDest - iStart);
 
         if(iStart == iDest) return "Cannot move to same position";
         
-        result = haveCorrectDice(Math.abs(iDest - iStart));
+        result = haveCorrectDie(moveDistance);
+        if (result != null) return result;
+    
+        result = validatePositions(iStart, iDest);
         if (result != null) return result;
 
-        result = isCorrectDirection(iStart, iDest);
-        if (result != null) return result;
+        getActualPip(iStart).removeCheckers(currentPlayer, 1);
 
+        if(getActualPip(iDest).getNumCheckers(nonCurrentPlayer().getId()) == 1) {
+            getActualPip(iDest).removeCheckers(nonCurrentPlayer(), 1);
+            getActualPip(0).addCheckers(nonCurrentPlayer(), 1);
+        }
+
+        getActualPip(iDest).addCheckers(currentPlayer, 1);
+
+        dice.removeDie(moveDistance);
+        
+        if(dice.getRoll() == null) {
+            currentPlayer = nonCurrentPlayer();
+            dice.roll();
+        }
         return null;
     }
 
-    private String haveCorrectDice(int moveDistance) {
-        int diceTotal = 0;
+    private String haveCorrectDie(int moveDistance) {
         for(int i = 0; i < dice.getRoll().length; i++) {
             int die = dice.getRoll()[i];
-            diceTotal += die;
             if(moveDistance == die) return null;
-            if(moveDistance == diceTotal) return null;
         }
         
         return "You do not have the correct dice for this move";
     }
 
-    private String isCorrectDirection(int iStart, int iDest) {
-        if(currentPlayer.equals(player0) && iStart > iDest)
-            return null;
-        if(currentPlayer.equals(player1) && iDest > iStart) {
-            return null;
+    private String validatePositions(int iStart, int iDest) {
+        if(iStart < iDest) return "You cannot move backwards";
+
+        if(getActualPip(iStart).getNumCheckers(currentPlayer.getId()) == 0) {
+            return "You do not have a check on pip " + iStart;
         }
 
-        return "You cannot move backwards.";
+        if(getActualPip(iDest).getNumCheckers(nonCurrentPlayer().getId()) > 1) {
+            return "Desitination Pip is occupied";
+        }
+        return null;
+    }
+
+    private Pip getActualPip(int index) {
+        //Just return pip by id
+        if(currentPlayer == player0) return board.getPips().get(index);
+
+        //Return a convert pip value for player 1
+        return board.getPips().get((Board.NUM_PIPS-1) - index);
+    }
+
+    private Player nonCurrentPlayer() {
+        if(currentPlayer == player0) return player1;
+
+        return player0;
     }
 }

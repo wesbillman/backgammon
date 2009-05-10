@@ -24,10 +24,26 @@ public class DiceTest {
     @Test
     public void testRoll() {
         Dice instance = new Dice();
+        int[] result = instance.roll();
+        while(result.length != 2) {
+            result = instance.roll();
+        }
+        assertNotSame(result[0], result[1]);
+
+        while(result.length != 4) {
+            result = instance.roll();
+        }
+        assertEquals(result[0], result[1]);
+        assertEquals(result[1], result[2]);
+        assertEquals(result[2], result[3]);
+    }
+
+    @Test
+    public void testToString() {
+        Dice instance = new Dice();
         int[] expResult = null;
         int[] result = instance.roll();
-        assertNotNull(result);
-        assertTrue(result.length >= 2);
+        assertNotNull(instance.toString());
     }
 
     /**

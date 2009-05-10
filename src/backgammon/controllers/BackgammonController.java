@@ -43,7 +43,7 @@ public class BackgammonController {
     private void play() {
 
         while(!model.isGameComplete()) {
-            view.displayBoard(model.getBoard(), Player.PLAYER_0);
+            view.displayBoard(model.getBoard(), model.getCurrentPlayer().getId());
             view.displayStatus(model.getScore(Player.PLAYER_0),
                     model.getScore(Player.PLAYER_1),
                     model.getDice());

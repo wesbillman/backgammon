@@ -48,29 +48,29 @@ public class BackgammonView {
         String s = "";
         if (currentPlayer == Player.PLAYER_0) {
             s += "+-------------------------------------------b\n";
-            s += "| 13 14 15 16 17 18 (0)  19 20 21 22 23 24  |\n";
+            s += "| 13 14 15 16 17 18 (25)  19 20 21 22 23 24 |\n";
             s += "|-------------------------------------------|\n";
         } else {
             s += "+-------------------------------------------w\n";
-            s += "| 12 11 10  9  8  7 (25)  6  5  4  3  2  1  |\n";
+            s += "| 12 11 10  9  8  7 ( 0)  6  5  4  3  2  1  |\n";
             s += "---------------------------------------------\n";
         }
 
         int i;
         for (i = 1; i < 7; i++) {
-            s += displayLine(board, i, true);
+            s += displayLine(board, i, true, currentPlayer);
         }
         for (i = 6; i > 0; i--) {
-            s += displayLine(board, i, false);
+            s += displayLine(board, i, false, currentPlayer);
         }
 
         if (currentPlayer == Player.PLAYER_0) {
             s += "|-------------------------------------------|\n";
-            s += "| 12 11 10  9  8  7 (25)  6  5  4  3  2  1  |\n";
+            s += "| 12 11 10  9  8  7 ( 0)  6  5  4  3  2  1  |\n";
             s += "+-------------------------------------------+\n";
         } else {
             s += "|-------------------------------------------|\n";
-            s += "| 13 14 15 16 17 18 (0)  19 20 21 22 23 24  |\n";
+            s += "| 13 14 15 16 17 18 (25)  19 20 21 22 23 24 |\n";
             s += "+-------------------------------------------+\n";
         }
 
@@ -89,7 +89,9 @@ public class BackgammonView {
 
         System.out.println();
     }
-    private String displayLine(Board b, int iLevel, boolean isBlackSide) {
+
+    private String displayLine(Board b, int iLevel, boolean isBlackSide,
+            int currentPlayer) {
         int i;                          // loop counter
         boolean bDisplayDot = false;    // display dots on the line
         String s = "|";                 // string to represent the line
@@ -104,7 +106,9 @@ public class BackgammonView {
             }
 
             s += " | ";
-            if (b.getPips().get(0).getNumCheckers() >= iLevel) {
+            if (b.getPips().get(25).getNumCheckers(Player.PLAYER_0) >= iLevel) {
+                s += "B|";
+            }else if (b.getPips().get(0).getNumCheckers(Player.PLAYER_1) >= iLevel) {
                 s += "B|";
             } else {
                 s += " |";
@@ -120,7 +124,9 @@ public class BackgammonView {
             }
 
             s += " | ";
-            if (b.getPips().get(25).getNumCheckers() >= iLevel) {
+            if (b.getPips().get(25).getNumCheckers(Player.PLAYER_1) >= iLevel) {
+                s += "W|";
+            } else if (b.getPips().get(0).getNumCheckers(Player.PLAYER_0) >= iLevel) {
                 s += "W|";
             } else {
                 s += " |";

@@ -47,6 +47,14 @@ public class PipTest {
         assertTrue(instance.addChecker(checker));
     }
 
+    @Test
+    public void testToString() {
+        Checker checker = new Checker(new Player(Player.PLAYER_0));
+        Pip instance = new Pip();
+        assertTrue(instance.addChecker(checker));
+        assertNotNull(instance.toString());
+    }
+
     /**
      * Test of addCheckers method, of class Pip.
      */
