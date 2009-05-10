@@ -1,9 +1,5 @@
 package backgammon.models;
 
-/**
- *
- * @author wesbillman
- */
 public class Player {
 
     public static final int PLAYER_0 = 0;
@@ -14,6 +10,10 @@ public class Player {
         this.id = id;
     }
 
+    /**
+     * The id for this player
+     * @return
+     */
     public int getId() {
         return id;
     }

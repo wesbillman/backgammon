@@ -3,10 +3,6 @@ package backgammon.models;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author wesbillman
- */
 public class Dice {
     private List<Integer> dice;
 
@@ -14,6 +10,11 @@ public class Dice {
         dice = new ArrayList<Integer>();
     }
 
+    /**
+     * Rolls the dice
+     * this will store and return the dice values
+     * @return diceValues
+     */
     public int[] roll() {
         int die1 = (int)(6 * Math.random() + 1);
         int die2 = (int)(6 * Math.random() + 1);
@@ -29,6 +30,10 @@ public class Dice {
         return getRoll();
     }
 
+    /**
+     * Gets the values for the last roll
+     * @return diceValues
+     */
     public int[] getRoll() {
         if(dice.size() == 0) return null;
         
@@ -41,6 +46,11 @@ public class Dice {
         return roll;
     }
 
+    /**
+     * Removes a die from the values list
+     * @param dieValue the die to remove
+     * @return diceValue
+     */
     public int[] removeDie(int dieValue) {
         Integer removeDie = null;
         for(Integer die : dice) {

@@ -12,10 +12,19 @@ public class BackgammonController {
     private Backgammon model = new Backgammon();
     private BackgammonView view = new BackgammonView();
 
+    /**
+     * Initialize the Controller, this will kickoff the start
+     * sequence to begin gameplay.
+     */
     public void init() {
         start();
     }
 
+    /**
+     * Start the controller.
+     * This will initialize the model and should be called
+     * to start each new game.
+     */
     private void start() {
         model.init();
         view.displayBanner();
@@ -40,6 +49,12 @@ public class BackgammonController {
         play();
     }
 
+    /**
+     * Play the game.
+     * This will continue to play until there is a winner.
+     * Once the game is complete start() will be called again
+     * to allow for continuous games.
+     */
     private void play() {
 
         while(!model.isGameComplete()) {
@@ -77,6 +92,9 @@ public class BackgammonController {
         start();
     }
 
+    /**
+     * Exit the game.
+     */
     private void exit() {
         view.displayGoodbye();
         System.exit(0);

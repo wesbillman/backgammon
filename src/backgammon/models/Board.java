@@ -1,7 +1,6 @@
 package backgammon.models;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -9,7 +8,10 @@ import java.util.List;
  * @author wes.billman
  */
 public class Board {
+    //Total number of pips should be 26
     public static final int NUM_PIPS = 26;
+
+    //A list of all pips on the board.
     private List<Pip> pips;
 
     public Board() {
@@ -20,6 +22,13 @@ public class Board {
         }
     }
 
+    /**
+     * Initializes the board to a starting state.
+     * Should build board based on backgammon rules
+     * 
+     * @param player0
+     * @param player1
+     */
     public void init(Player player0, Player player1) {
         //Initialize Player0's board
         getPips().get(6).addCheckers(player0, 5);

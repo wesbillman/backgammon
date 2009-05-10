@@ -6,15 +6,23 @@ package backgammon.models;
  * @author wesbillman
  */
 public class Backgammon {
+    //The board layout for this game.
     private Board board;
+
+    //the dice model for this game
     private Dice dice;
+
+    //the players and a reference to current player
     private Player player0, player1, currentPlayer;
+
+    //how many human players in this game
     private int numPlayers;
 
-    public Backgammon() {
-        
-    }
-
+    /**
+     * Initialize the backgammon model.
+     * This should reset all states so that a new
+     * game can begin.
+     */
     public void init() {
         board = new Board();
         player0 = new Player(Player.PLAYER_0);
@@ -30,6 +38,11 @@ public class Backgammon {
         currentPlayer = (currentDice[0] > currentDice[1]) ? player0 : player1;
     }
 
+    /**
+     * Gets the current score for the specified player
+     * @param playerId the player to get score for
+     * @return the current score for the player
+     */
     public int getScore(int playerId) {
         int score = 0;
         for(int i = 25; i > 0; i--) {
@@ -40,14 +53,14 @@ public class Backgammon {
     }
 
     /**
-     * @return the numPlayers
+     * @return the number of human players
      */
     public int getNumPlayers() {
         return numPlayers;
     }
 
     /**
-     * @param numPlayers the numPlayers to set
+     * @param numPlayers the number of human players
      */
     public void setNumPlayers(int numPlayers) {
         this.numPlayers = numPlayers;
@@ -85,6 +98,12 @@ public class Backgammon {
         return false;
     }
 
+    /**
+     * Calculates the first available move.  Used for computer
+     * moves.
+     * @return moves the move array for a valid move
+     *               null if there are none.
+     */
     public int[] getFirstAvailableMove() {
         int[] move = new int[2];
 
@@ -104,6 +123,16 @@ public class Backgammon {
         return null;
     }
 
+    /**
+     * Move a check from start to dest.
+     * This will validate the move is acceptable and perform the
+     * move.  If the move is not valid it will return an
+     * error message for the user.
+     *
+     * @param iStart the pip to move from
+     * @param iDest the pip to move to
+     * @return statusMessage
+     */
     public String moveChecker(int iStart, int iDest) {
         String result = null;
         int moveDistance = Math.abs(iDest - iStart);
@@ -131,11 +160,20 @@ public class Backgammon {
         return null;
     }
 
+    /**
+     * Force a player change
+     */
     public void switchPlayer() {
         currentPlayer = nonCurrentPlayer();
         dice.roll();
     }
-    
+
+    /**
+     * Validate the user has the correct die for
+     * the requested move
+     * @param moveDistance how far to move
+     * @return statusMessage
+     */
     private String haveCorrectDie(int moveDistance) {
         for(int i = 0; i < dice.getRoll().length; i++) {
             int die = dice.getRoll()[i];
@@ -145,6 +183,13 @@ public class Backgammon {
         return "You do not have the correct dice for this move";
     }
 
+    /**
+     * Validates the requested positions for this move.
+     * current validates; direction, start, dest, bar and home.
+     * @param iStart
+     * @param iDest
+     * @return statusMessage
+     */
     private String validatePositions(int iStart, int iDest) {
         //Validate direction
         if(iStart < iDest) return "You cannot move backwards";
@@ -178,6 +223,12 @@ public class Backgammon {
         return null;
     }
 
+    /**
+     * This is a conversion function to covert index to a
+     * pip based on the current player.
+     * @param index
+     * @return pip
+     */
     private Pip getActualPip(int index) {
         //Bar and off don't change.
         if(index == 0 || index == 25) {
@@ -191,6 +242,10 @@ public class Backgammon {
         return board.getPips().get((Board.NUM_PIPS-1) - index);
     }
 
+    /**
+     * Gets the player who is not the currentPlayer
+     * @return
+     */
     private Player nonCurrentPlayer() {
         if(currentPlayer == player0) return player1;
 

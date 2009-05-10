@@ -4,8 +4,7 @@ import java.io.*;
 import java.util.logging.*;
 
 /**
- *
- * @author wesbillman
+ * Taken from sample code provided by instrutor, slightly modified.
  */
 public class InputController {
     public static String readString() {

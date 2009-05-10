@@ -3,12 +3,11 @@ package backgammon.views;
 import backgammon.controllers.InputController;
 import backgammon.models.*;
 
-/**
- *
- * @author wes.billman
- */
 public class BackgammonView {
 
+    /**
+     * Display a welcome banner to the user
+     */
     public void displayBanner() {
         System.out.println();
         System.out.println("*********************************************");
@@ -16,6 +15,9 @@ public class BackgammonView {
         System.out.println("*********************************************");
     }
 
+    /**
+     * Display a goodbye message to the user
+     */
     public void displayGoodbye() {
         System.out.println();
         System.out.println("*********************************************");
@@ -23,15 +25,29 @@ public class BackgammonView {
         System.out.println("*********************************************");
     }
 
+    /**
+     * Display any invalid option that the user selected
+     * This method is reused for any invalid type.
+     * @param option that was not valid
+     */
     public void displayInvalidOption(String option) {
         System.out.println();
         System.out.println("'" + option + "' is not a valid option");
     }
 
+    /**
+     * Display any generic message to the user
+     * @param message to display
+     */
     public void displayMessage(String message) {
         System.out.print(message);
     }
 
+    /**
+     * Display the game start information
+     * @param dice values
+     * @param firstPlayer
+     */
     public void displayGameStart(Dice dice, int firstPlayer) {
         System.out.println("Starting Roll...");
         System.out.println("  Black: " + dice.getRoll()[0]);
@@ -44,6 +60,11 @@ public class BackgammonView {
         }
     }
 
+    /**
+     * Display the game complete information
+     * @param p0Score
+     * @param p1Score
+     */
     public void displayGameComplete(int p0Score, int p1Score) {
         System.out.println();
         System.out.println("*********************************************");
@@ -54,6 +75,12 @@ public class BackgammonView {
         System.out.println("*********************************************");
     }
 
+    /**
+     * Display the current board.  This should display differently
+     * based on who is the current player.
+     * @param board
+     * @param currentPlayer
+     */
     public void displayBoard(Board board, int currentPlayer) {
         String s = "";
         if (currentPlayer == Player.PLAYER_0) {
@@ -87,6 +114,13 @@ public class BackgammonView {
         System.out.print(s);
     }
 
+    /**
+     * Display the current status of the game.  This information
+     * is generally displayed after the board.
+     * @param player0score
+     * @param player1score
+     * @param dice
+     */
     public void displayStatus(int player0score, int player1score, Dice dice) {
         System.out.print("Black: " + player0score);
         System.out.print("      White: " + player1score);
@@ -100,6 +134,13 @@ public class BackgammonView {
         System.out.println();
     }
 
+    /**
+     * Display one line of the board
+     * @param b the board
+     * @param iLevel the current level of the board
+     * @param isBlackSide flag for blackside
+     * @return
+     */
     private String displayLine(Board b, int iLevel, boolean isBlackSide) {
         int i;                          // loop counter
         boolean bDisplayDot = false;    // display dots on the line
@@ -145,6 +186,14 @@ public class BackgammonView {
         return s + "  |\n";
     }
 
+    /**
+     * Display an individual checker.
+     * @param b the board
+     * @param iPip the pip
+     * @param iLevel the current level
+     * @param bDot fill in with a dot?
+     * @return
+     */
     private String displayChecker(Board b, int iPip, int iLevel, boolean bDot) {
         String s = "  ";
         if (b.getPips().get(iPip).getNumCheckers(Player.PLAYER_0) >= iLevel) {
@@ -160,6 +209,10 @@ public class BackgammonView {
         return s;
     }
 
+    /**
+     * Request game type information from the user.
+     * @return userInput
+     */
     public String getGameType() {
         System.out.println();
         System.out.println("Select Game Type:");
@@ -172,6 +225,11 @@ public class BackgammonView {
         return InputController.readString();
     }
 
+    /**
+     * Request a move from the user
+     * @param player 
+     * @return moveInput
+     */
     public String[] getMove(int player) {
         String[] moves = new String[2];
         String playerName = (player == Player.PLAYER_0) ? "Black" : "White";
