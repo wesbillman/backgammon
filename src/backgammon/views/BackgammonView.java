@@ -44,6 +44,16 @@ public class BackgammonView {
         }
     }
 
+    public void displayGameComplete(int p0Score, int p1Score) {
+        System.out.println();
+        System.out.println("*********************************************");
+        System.out.println("                Game Complete                ");
+        System.out.println("Final Score:");
+        System.out.println("  Black: " + p0Score);
+        System.out.println("  White: " + p1Score);
+        System.out.println("*********************************************");
+    }
+
     public void displayBoard(Board board, int currentPlayer) {
         String s = "";
         if (currentPlayer == Player.PLAYER_0) {
@@ -58,10 +68,10 @@ public class BackgammonView {
 
         int i;
         for (i = 1; i < 7; i++) {
-            s += displayLine(board, i, true, currentPlayer);
+            s += displayLine(board, i, true);
         }
         for (i = 6; i > 0; i--) {
-            s += displayLine(board, i, false, currentPlayer);
+            s += displayLine(board, i, false);
         }
 
         if (currentPlayer == Player.PLAYER_0) {
@@ -90,8 +100,7 @@ public class BackgammonView {
         System.out.println();
     }
 
-    private String displayLine(Board b, int iLevel, boolean isBlackSide,
-            int currentPlayer) {
+    private String displayLine(Board b, int iLevel, boolean isBlackSide) {
         int i;                          // loop counter
         boolean bDisplayDot = false;    // display dots on the line
         String s = "|";                 // string to represent the line
@@ -106,9 +115,8 @@ public class BackgammonView {
             }
 
             s += " | ";
+
             if (b.getPips().get(25).getNumCheckers(Player.PLAYER_0) >= iLevel) {
-                s += "B|";
-            }else if (b.getPips().get(0).getNumCheckers(Player.PLAYER_1) >= iLevel) {
                 s += "B|";
             } else {
                 s += " |";
@@ -125,8 +133,6 @@ public class BackgammonView {
 
             s += " | ";
             if (b.getPips().get(25).getNumCheckers(Player.PLAYER_1) >= iLevel) {
-                s += "W|";
-            } else if (b.getPips().get(0).getNumCheckers(Player.PLAYER_0) >= iLevel) {
                 s += "W|";
             } else {
                 s += " |";

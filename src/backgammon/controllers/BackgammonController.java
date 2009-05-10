@@ -47,19 +47,34 @@ public class BackgammonController {
             view.displayStatus(model.getScore(Player.PLAYER_0),
                     model.getScore(Player.PLAYER_1),
                     model.getDice());
-            String[] move = view.getMove(model.getCurrentPlayer().getId());
+            
             int iStart, iDest;
-            try{
-                iStart = Integer.parseInt(move[0]);
-                iDest = Integer.parseInt(move[1]);
-            } catch( NumberFormatException ex) {
-                view.displayInvalidOption(move[0] + " or " + move[1]);
-                continue;
+            if(model.getNumPlayers() > model.getCurrentPlayer().getId()) {
+                String[] move = view.getMove(model.getCurrentPlayer().getId());
+                try{
+                    iStart = Integer.parseInt(move[0]);
+                    iDest = Integer.parseInt(move[1]);
+                    String moveResult = model.moveChecker(iStart, iDest);
+                    if(moveResult != null) view.displayMessage(moveResult + "\n");
+                } catch( NumberFormatException ex) {
+                    view.displayInvalidOption(move[0] + " or " + move[1]);
+                    continue;
+                }
+            } else {
+                int[] move = new int[2];
+                move = model.getFirstAvailableMove();
+                if(move != null) {
+                    iStart = move[0];
+                    iDest = move[1];
+                    model.moveChecker(iStart, iDest);
+                } else {
+                    model.switchPlayer();
+                }
             }
-
-            String moveResult = model.moveChecker(iStart, iDest);
-            if(moveResult != null) view.displayMessage(moveResult + "\n");
         }
+        view.displayGameComplete(model.getScore(Player.PLAYER_0),
+                model.getScore(Player.PLAYER_1));
+        start();
     }
 
     private void exit() {
